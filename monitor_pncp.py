@@ -20,13 +20,13 @@ from email.message import EmailMessage
 from pathlib import Path
 
 # ---------------- Configuração (via variáveis de ambiente) ----------------
-TERMOS = [t.strip() for t in os.getenv("TERMOS", "leilão,leiloeiro,leiloeira,leilao").split(",") if t.strip()]
-TIPOS = [t.strip() for t in os.getenv("TIPOS_DOCUMENTO", "edital,ata,contrato").split(",") if t.strip()]
-UFS = {u.strip().upper() for u in os.getenv("UFS", "").split(",") if u.strip()}  # vazio = Brasil todo
-STATUS = os.getenv("STATUS", "").strip()          # vazio = sem filtro de situação
-PAGINAS = int(os.getenv("PAGINAS", "2"))          # páginas por termo/tipo a cada execução
+TERMOS = [t.strip() for t in (os.getenv("TERMOS") or "leilão,leiloeiro,leiloeira,leilao").split(",") if t.strip()]
+TIPOS = [t.strip() for t in (os.getenv("TIPOS_DOCUMENTO") or "edital,ata,contrato").split(",") if t.strip()]
+UFS = {u.strip().upper() for u in (os.getenv("UFS") or "").split(",") if u.strip()}  # vazio = Brasil todo
+STATUS = (os.getenv("STATUS") or "").strip()          # vazio = sem filtro de situação
+PAGINAS = int(os.getenv("PAGINAS") or "2")          # páginas por termo/tipo a cada execução
 TAM_PAGINA = 50
-STATE_FILE = Path(os.getenv("STATE_FILE", "vistos.json"))
+STATE_FILE = Path(os.getenv("STATE_FILE") or "vistos.json")
 MAX_ESTADO = 20000
 
 BUSCA_URL = "https://pncp.gov.br/api/search/"
@@ -35,10 +35,10 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 
 SMTP_HOST = os.getenv("SMTP_HOST", "")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_PORT = int(os.getenv("SMTP_PORT") or "587")
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASS = os.getenv("SMTP_PASS", "")
-EMAIL_DE = os.getenv("EMAIL_DE", SMTP_USER)
+EMAIL_DE = (os.getenv("EMAIL_DE") or SMTP_USER)
 EMAIL_PARA = os.getenv("EMAIL_PARA", "")
 
 
